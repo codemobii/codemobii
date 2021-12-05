@@ -1,14 +1,31 @@
-import {Market, MARKETS, OpenOrders, Orderbook, TOKEN_MINTS, TokenInstructions,} from '@project-serum/serum';
-import {PublicKey} from '@solana/web3.js';
-import React, {useContext, useEffect, useState} from 'react';
-import {divideBnToNumber, floorToDecimal, getTokenMultiplierFromDecimals, sleep, useLocalStorageState,} from './utils';
-import {refreshCache, useAsyncData} from './fetch-loop';
-import {useAccountData, useAccountInfo, useConnection} from './connection';
-import {useWallet} from './wallet';
+import {
+  Market,
+  MARKETS,
+  OpenOrders,
+  Orderbook,
+  TOKEN_MINTS,
+  TokenInstructions,
+} from '@project-serum/serum';
+import { PublicKey } from '@solana/web3.js';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  divideBnToNumber,
+  floorToDecimal,
+  getTokenMultiplierFromDecimals,
+  sleep,
+  useLocalStorageState,
+} from './utils';
+import { refreshCache, useAsyncData } from './fetch-loop';
+import { useAccountData, useAccountInfo, useConnection } from './connection';
+import { useWallet } from './wallet';
 import tuple from 'immutable-tuple';
-import {notify} from './notifications';
+import { notify } from './notifications';
 import BN from 'bn.js';
-import {getTokenAccountInfo, parseTokenAccountData, useMintInfos,} from './tokens';
+import {
+  getTokenAccountInfo,
+  parseTokenAccountData,
+  useMintInfos,
+} from './tokens';
 import {
   Balances,
   CustomMarketInfo,
@@ -20,19 +37,38 @@ import {
   SelectedTokenAccounts,
   TokenAccount,
 } from './types';
-import {WRAPPED_SOL_MINT} from '@project-serum/serum/lib/token-instructions';
-import {Order} from '@project-serum/serum/lib/market';
+import { WRAPPED_SOL_MINT } from '@project-serum/serum/lib/token-instructions';
+import { Order } from '@project-serum/serum/lib/market';
 import BonfidaApi from './bonfidaConnector';
+const web3_js_1 = require('@solana/web3.js');
 
 // Used in debugging, should be false in production
 const _IGNORE_DEPRECATED = false;
 
+const CUCKOOMARKETS = [
+  ...MARKETS,
+  {
+    name: 'Cuckoo',
+    programId: new web3_js_1.PublicKey(
+      '9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin',
+    ),
+    deprecated: false,
+    baseLabel: 'CUCKOO',
+    address: new web3_js_1.PublicKey(
+      '4xTNh56m9JMgGheU9SbDVN99E39zzUK9Fyhk8JWRbDgM',
+    ),
+  },
+];
+
 export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
-  ? MARKETS.map((m) => ({ ...m, deprecated: false }))
-  : MARKETS;
+  ? CUCKOOMARKETS.map((m) => ({ ...m, deprecated: false }))
+  : CUCKOOMARKETS;
 
 export function useMarketsList() {
-  return USE_MARKETS.filter(({ name, deprecated }) => !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name));
+  return USE_MARKETS.filter(
+    ({ name, deprecated }) =>
+      !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name),
+  );
 }
 
 export function useAllMarkets() {
@@ -159,7 +195,7 @@ const _SLOW_REFRESH_INTERVAL = 5 * 1000;
 const _FAST_REFRESH_INTERVAL = 1000;
 
 export const DEFAULT_MARKET = USE_MARKETS.find(
-  ({ name, deprecated }) => name === 'SRM/USDT' && !deprecated,
+  ({ name, deprecated }) => name === 'Cuckoo' && !deprecated,
 );
 
 export function getMarketDetails(
@@ -276,7 +312,7 @@ export function getTradePageUrl(marketAddress?: string) {
     }
     marketAddress = marketAddress || DEFAULT_MARKET?.address.toBase58() || '';
   }
-  return `/market/${marketAddress}`;
+  return marketAddress;
 }
 
 export function useSelectedTokenAccounts(): [
@@ -1167,7 +1203,12 @@ export function getExpectedFillPrice(
   return formattedPrice;
 }
 
-export function useCurrentlyAutoSettling(): [boolean, (currentlyAutoSettling: boolean) => void] {
-  const [currentlyAutoSettling, setCurrentlyAutosettling] = useState<boolean>(false);
+export function useCurrentlyAutoSettling(): [
+  boolean,
+  (currentlyAutoSettling: boolean) => void,
+] {
+  const [currentlyAutoSettling, setCurrentlyAutosettling] = useState<boolean>(
+    false,
+  );
   return [currentlyAutoSettling, setCurrentlyAutosettling];
 }

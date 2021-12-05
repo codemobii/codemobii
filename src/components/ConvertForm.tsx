@@ -30,7 +30,7 @@ const { Option } = Select;
 const { Title } = Typography;
 
 const ActionButton = styled(Button)`
-  color: #2abdd2;
+  color: #53e1e1;
   background-color: #212734;
   border-width: 0px;
 `;
@@ -94,71 +94,93 @@ export default function ConvertForm() {
   };
 
   return (
-    <FloatingElement style={{ maxWidth: 500 }}>
-      <Title level={3}>Convert</Title>
-      {!connected && (
-        <Row justify="center">
-          <Col>
-            <WalletConnect />
-          </Col>
-        </Row>
-      )}
-      {tokenConvertMap && connected && (
-        <>
-          <Row style={{ marginBottom: 8 }}>
-            <Col>
-              <Select
-                style={{ minWidth: 300 }}
-                placeholder="Select a token"
-                value={fromToken}
-                onChange={(token) => {
-                  setFromToken(token);
-                  setToToken(undefined);
-                }}
-              >
-                {Array.from(tokenConvertMap.keys()).map((token) => (
-                  <Option value={token} key={token}>
-                    {token}
-                  </Option>
-                ))}
-              </Select>
-            </Col>
-          </Row>
-          {fromToken && (
-            <Row style={{ marginBottom: 8 }}>
+    <div
+      style={{
+        backgroundColor: '#2C254A',
+        borderRadius: 10,
+        overflow: 'hidden',
+        maxWidth: 350,
+      }}
+    >
+      <Title
+        level={4}
+        style={{
+          padding: '10px 20px',
+          backgroundColor: '#2C254A',
+          width: '100%',
+        }}
+      >
+        Convert
+      </Title>
+      <FloatingElement>
+        <div style={{ padding: 20 }}>
+          {!connected && (
+            <Row justify="center">
               <Col>
-                <Select
-                  style={{ minWidth: 300 }}
-                  value={toToken}
-                  onChange={setMarket}
-                >
-                  {[...(tokenConvertMap.get(fromToken) || [])].map((token) => (
-                    <Option value={token} key={token}>
-                      {token}
-                    </Option>
-                  ))}
-                </Select>
+                <WalletConnect />
               </Col>
             </Row>
           )}
-          {fromToken && toToken && (
-            <MarketProvider
-              marketAddress={marketAddress}
-              setMarketAddress={setMarketAddress}
-            >
-              <ConvertFormSubmit
-                size={size}
-                setSize={setSize}
-                fromToken={fromToken}
-                toToken={toToken}
-                wallet={wallet}
-                customMarkets={customMarkets}
-              />
-            </MarketProvider>
+          {tokenConvertMap && connected && (
+            <>
+              <Row style={{ marginBottom: 8 }}>
+                <Col>
+                  <Select
+                    style={{ minWidth: 300 }}
+                    placeholder="Select a token"
+                    value={fromToken}
+                    onChange={(token) => {
+                      setFromToken(token);
+                      setToToken(undefined);
+                    }}
+                  >
+                    {Array.from(tokenConvertMap.keys()).map((token) => (
+                      <Option value={token} key={token}>
+                        {token}
+                      </Option>
+                    ))}
+                  </Select>
+                </Col>
+              </Row>
+              {fromToken && (
+                <Row style={{ marginBottom: 8 }}>
+                  <Col>
+                    <Select
+                      style={{ minWidth: 300 }}
+                      value={toToken}
+                      onChange={setMarket}
+                    >
+                      {[...(tokenConvertMap.get(fromToken) || [])].map(
+                        (token) => (
+                          <Option value={token} key={token}>
+                            {token}
+                          </Option>
+                        ),
+                      )}
+                    </Select>
+                  </Col>
+                </Row>
+              )}
+              {fromToken && toToken && (
+                <MarketProvider
+                  marketAddress={marketAddress}
+                  setMarketAddress={setMarketAddress}
+                >
+                  <ConvertFormSubmit
+                    size={size}
+                    setSize={setSize}
+                    fromToken={fromToken}
+                    toToken={toToken}
+                    wallet={wallet}
+                    customMarkets={customMarkets}
+                  />
+                </MarketProvider>
+              )}
+            </>
           )}
-        </>
-      )}
-    </FloatingElement>
+        </div>
+      </FloatingElement>
+    </div>
   );
 }
 

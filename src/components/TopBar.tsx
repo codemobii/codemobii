@@ -1,11 +1,16 @@
 import {
+  AppstoreAddOutlined,
   InfoCircleOutlined,
+  PieChartOutlined,
   PlusCircleOutlined,
+  RetweetOutlined,
   SettingOutlined,
+  SlidersOutlined,
+  UnorderedListOutlined,
 } from '@ant-design/icons';
 import { Button, Col, Menu, Popover, Row, Select } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
 import styled from 'styled-components';
 import { useWallet } from '../utils/wallet';
@@ -20,17 +25,17 @@ import AppSearch from './AppSearch';
 import { getTradePageUrl } from '../utils/markets';
 
 const Wrapper = styled.div`
-  background-color: #0d1017;
+  background-color: #3b3363;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding: 0px 30px;
+  padding: 0px 10px;
   flex-wrap: wrap;
 `;
 const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
-  color: #2abdd2;
+  color: #53e1e1;
   font-weight: bold;
   cursor: pointer;
   img {
@@ -40,7 +45,8 @@ const LogoWrapper = styled.div`
 `;
 
 const EXTERNAL_LINKS = {
-  '/learn': 'https://docs.projectserum.com/trade-on-serum-dex/trade-on-serum-dex-1',
+  '/learn':
+    'https://docs.projectserum.com/trade-on-serum-dex/trade-on-serum-dex-1',
   '/add-market': 'https://serum-academy.com/en/add-market/',
   '/wallet-support': 'https://serum-academy.com/en/wallet-support',
   '/dex-list': 'https://serum-academy.com/en/dex-list/',
@@ -127,9 +133,28 @@ export default function TopBar() {
     return () => window.removeEventListener('beforeunload', handler);
   }, [endpointInfoCustom, setEndpoint]);
 
-  const tradePageUrl = location.pathname.startsWith('/market/')
+  const tradePageUrl = location.pathname.startsWith('/cuckoo/')
     ? location.pathname
     : getTradePageUrl();
+
+  const [dimensions, setDimensions] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const width = dimensions?.width;
 
   return (
     <>
@@ -140,9 +165,12 @@ export default function TopBar() {
         onClose={() => setAddEndpointVisible(false)}
       />
       <Wrapper>
-        <LogoWrapper onClick={() => history.push(tradePageUrl)}>
-          <img src={logo} alt="" />
-          {'SERUM'}
+        <LogoWrapper onClick={() => history.push('/cuckoo')}>
+          <img
+            src={'https://cuckoodex.com/static/media/logo.fdfe2730.png'}
+            alt=""
+          />
+          {'CUCKOO'}
         </LogoWrapper>
         <Menu
           mode="horizontal"
@@ -156,156 +184,105 @@ export default function TopBar() {
             flex: 1,
           }}
         >
-          <Menu.Item key={tradePageUrl} style={{ margin: '0 10px 0 20px' }}>
-            TRADE
-          </Menu.Item>
-          {!searchFocussed && (
-            <Menu.Item key="/swap" style={{ margin: '0 10px' }}>
-              <a
-                href={EXTERNAL_LINKS['/swap']}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                SWAP
-              </a>
-            </Menu.Item>
-          )}
-          {connected && (!searchFocussed || location.pathname === '/balances') && (
-            <Menu.Item key="/balances" style={{ margin: '0 10px' }}>
-              BALANCES
-            </Menu.Item>
-          )}
-          {connected && (!searchFocussed || location.pathname === '/orders') && (
-            <Menu.Item key="/orders" style={{ margin: '0 10px' }}>
-              ORDERS
-            </Menu.Item>
-          )}
-          {connected && (!searchFocussed || location.pathname === '/convert') && (
-            <Menu.Item key="/convert" style={{ margin: '0 10px' }}>
-              CONVERT
-            </Menu.Item>
-          )}
-          {(!searchFocussed || location.pathname === '/list-new-market') && (
-            <Menu.Item key="/list-new-market" style={{ margin: '0 10px' }}>
-              ADD MARKET
-            </Menu.Item>
-          )}
-          {!searchFocussed && (
-            <Menu.SubMenu
-              title="LEARN"
-              onTitleClick={() =>
-                window.open(EXTERNAL_LINKS['/learn'], '_blank')
-              }
-              style={{ margin: '0 0px 0 10px' }}
-            >
-              <Menu.Item key="/add-market">
-                <a
-                  href={EXTERNAL_LINKS['/add-market']}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Adding a market
-                </a>
+          {width > 1000 && (
+            <>
+              <Menu.Item key={'/cuckoo'} style={{ margin: '0 10px 0 20px' }}>
+                TRADE
               </Menu.Item>
-              <Menu.Item key="/wallet-support">
-                <a
-                  href={EXTERNAL_LINKS['/wallet-support']}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Supported wallets
-                </a>
-              </Menu.Item>
-              <Menu.Item key="/dex-list">
-                <a
-                  href={EXTERNAL_LINKS['/dex-list']}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  DEX list
-                </a>
-              </Menu.Item>
-              <Menu.Item key="/developer-resources">
-                <a
-                  href={EXTERNAL_LINKS['/developer-resources']}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Developer resources
-                </a>
-              </Menu.Item>
-              <Menu.Item key="/explorer">
-                <a
-                  href={EXTERNAL_LINKS['/explorer']}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Solana block explorer
-                </a>
-              </Menu.Item>
-              <Menu.Item key="/srm-faq">
-                <a
-                  href={EXTERNAL_LINKS['/srm-faq']}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  SRM FAQ
-                </a>
-              </Menu.Item>
-            </Menu.SubMenu>
+              {!searchFocussed && (
+                <Menu.Item key="/swap" style={{ margin: '0 10px' }}>
+                  <a
+                    href={EXTERNAL_LINKS['/swap']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    SWAP
+                  </a>
+                </Menu.Item>
+              )}
+              {connected &&
+                (!searchFocussed || location.pathname === '/balances') && (
+                  <Menu.Item key="/balances" style={{ margin: '0 10px' }}>
+                    BALANCES
+                  </Menu.Item>
+                )}
+              {connected &&
+                (!searchFocussed || location.pathname === '/orders') && (
+                  <Menu.Item key="/orders" style={{ margin: '0 10px' }}>
+                    ORDERS
+                  </Menu.Item>
+                )}
+              {connected &&
+                (!searchFocussed || location.pathname === '/convert') && (
+                  <Menu.Item key="/convert" style={{ margin: '0 10px' }}>
+                    CONVERT
+                  </Menu.Item>
+                )}
+              {(!searchFocussed ||
+                location.pathname === '/list-new-market') && (
+                <Menu.Item key="/list-new-market" style={{ margin: '0 10px' }}>
+                  ADD MARKET
+                </Menu.Item>
+              )}
+            </>
           )}
         </Menu>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingRight: 5,
-          }}
-        >
-          <AppSearch
-            onFocus={() => setSearchFocussed(true)}
-            onBlur={() => setSearchFocussed(false)}
-            focussed={searchFocussed}
-            width={searchFocussed ? '350px' : '35px'}
-          />
-        </div>
-        <div>
-          <Row
-            align="middle"
-            style={{ paddingLeft: 5, paddingRight: 5 }}
-            gutter={16}
-          >
-            <Col>
-              <PlusCircleOutlined
-                style={{ color: '#2abdd2' }}
-                onClick={() => setAddEndpointVisible(true)}
+        {width > 1000 && (
+          <>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                paddingRight: 5,
+              }}
+            >
+              <AppSearch
+                onFocus={() => setSearchFocussed(true)}
+                onBlur={() => setSearchFocussed(false)}
+                focussed={searchFocussed}
+                width={searchFocussed ? '350px' : '35px'}
               />
-            </Col>
-            <Col>
-              <Popover
-                content={endpoint}
-                placement="bottomRight"
-                title="URL"
-                trigger="hover"
+            </div>
+            <div>
+              <Row
+                align="middle"
+                style={{ paddingLeft: 5, paddingRight: 5 }}
+                gutter={16}
               >
-                <InfoCircleOutlined style={{ color: '#2abdd2' }} />
-              </Popover>
-            </Col>
-            <Col>
-              <Select
-                onSelect={setEndpoint}
-                value={endpoint}
-                style={{ marginRight: 8, width: '150px' }}
-              >
-                {availableEndpoints.map(({ name, endpoint }) => (
-                  <Select.Option value={endpoint} key={endpoint}>
-                    {name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Col>
-          </Row>
-        </div>
+                <Col>
+                  <PlusCircleOutlined
+                    style={{ color: '#53e1e1' }}
+                    onClick={() => setAddEndpointVisible(true)}
+                  />
+                </Col>
+                <Col>
+                  <Popover
+                    content={endpoint}
+                    placement="bottomRight"
+                    title="URL"
+                    trigger="hover"
+                  >
+                    <InfoCircleOutlined style={{ color: '#53e1e1' }} />
+                  </Popover>
+                </Col>
+                <Col>
+                  <Select
+                    onSelect={setEndpoint}
+                    value={endpoint}
+                    style={{ marginRight: 8, width: '150px' }}
+                  >
+                    {availableEndpoints.map(({ name, endpoint }) => (
+                      <Select.Option value={endpoint} key={endpoint}>
+                        {name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Col>
+              </Row>
+            </div>
+          </>
+        )}
+
         {connected && (
           <div>
             <Popover
@@ -325,6 +302,90 @@ export default function TopBar() {
           <WalletConnect />
         </div>
       </Wrapper>
+
+      {width < 1000 && (
+        <div
+          style={{
+            position: 'fixed',
+            left: 0,
+            bottom: 0,
+            width: '100%',
+            backgroundColor: '#2C254A',
+            borderTop: '1px solid #473F72',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            color: '#fff',
+            padding: '10px',
+            zIndex: 100,
+          }}
+        >
+          <Link
+            to={'/cuckoo'}
+            style={{
+              width: '18%',
+              display: 'block',
+              textAlign: 'center',
+              color: '#fff',
+            }}
+          >
+            <PieChartOutlined style={{ fontSize: 24, lineHeight: 0 }} />
+            <p style={{ fontSize: 10, lineHeight: 0 }}>Trade</p>
+          </Link>
+          <Link
+            to="/balances"
+            style={{
+              width: '18%',
+
+              color: '#fff',
+              display: 'block',
+              textAlign: 'center',
+            }}
+          >
+            <SlidersOutlined style={{ fontSize: 24, lineHeight: 0 }} />
+            <p style={{ fontSize: 10, lineHeight: 0 }}>Balances</p>
+          </Link>
+          <Link
+            to="/orders"
+            style={{
+              width: '18%',
+              color: '#fff',
+
+              display: 'block',
+              textAlign: 'center',
+            }}
+          >
+            <UnorderedListOutlined style={{ fontSize: 24, lineHeight: 0 }} />
+            <p style={{ fontSize: 10, lineHeight: 0 }}>Orders</p>
+          </Link>
+          <Link
+            to="/convert"
+            style={{
+              width: '18%',
+              color: '#fff',
+
+              display: 'block',
+              textAlign: 'center',
+            }}
+          >
+            <RetweetOutlined style={{ fontSize: 24, lineHeight: 0 }} />
+            <p style={{ fontSize: 10, lineHeight: 0 }}>Convert</p>
+          </Link>
+          <Link
+            to="/list-new-market"
+            style={{
+              width: '18%',
+              color: '#fff',
+
+              display: 'block',
+              textAlign: 'center',
+            }}
+          >
+            <AppstoreAddOutlined style={{ fontSize: 24, lineHeight: 0 }} />
+            <p style={{ fontSize: 10, lineHeight: 0 }}>Add Market</p>
+          </Link>
+        </div>
+      )}
     </>
   );
 }

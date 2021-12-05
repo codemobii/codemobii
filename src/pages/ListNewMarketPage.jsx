@@ -12,11 +12,12 @@ import { useMintInput } from '../components/useMintInput';
 const { Text, Title } = Typography;
 
 const Wrapper = styled.div`
-  max-width: 800px;
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 24px;
-  margin-bottom: 24px;
+  background-color: #2c254a;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 export default function ListNewMarketPage() {
@@ -110,86 +111,103 @@ export default function ListNewMarketPage() {
   }
 
   return (
-    <Wrapper>
-      <FloatingElement>
-        <Title level={4}>List New Market</Title>
-        <Form
-          labelCol={{ span: 24 }}
-          wrapperCol={{ span: 24 }}
-          layout={'vertical'}
-          onFinish={onSubmit}
+    <div
+      style={{
+        width: '100%',
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Wrapper className="page_card">
+        <Title
+          level={4}
+          style={{ padding: '10px 20px', backgroundColor: '#2C254A' }}
         >
-          {baseMintInput}
-          {quoteMintInput}
-          <Form.Item
-            label={
-              <Tooltip title="Smallest allowed order size. For a BTC/USDT market, this would be in units of BTC.">
-                Minimum Order Size{' '}
-                <Text type="secondary">(Lot size in e.g. BTC)</Text>
-              </Tooltip>
-            }
-            name="lotSize"
-            initialValue="1"
-            validateStatus={
-              baseMintInfo && quoteMintInfo
-                ? baseLotSize
-                  ? 'success'
-                  : 'error'
-                : null
-            }
-            hasFeedback={baseMintInfo && quoteMintInfo}
+          List New Market
+        </Title>
+        <FloatingElement style={{ padding: 20 }}>
+          <Form
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+            layout={'vertical'}
+            onFinish={onSubmit}
           >
-            <Input
-              value={lotSize}
-              onChange={(e) => setLotSize(e.target.value.trim())}
-              type="number"
-              min="0"
-              step="any"
-            />
-          </Form.Item>
-          <Form.Item
-            label={
-              <Tooltip title="Smallest amount by which prices can move. For a BTC/USDT market, this would be in units of USDT.">
-                Tick Size{' '}
-                <Text type="secondary">(Price increment in e.g. USDT)</Text>
-              </Tooltip>
-            }
-            name="tickSize"
-            initialValue="0.01"
-            validateStatus={
-              baseMintInfo && quoteMintInfo
-                ? quoteLotSize
-                  ? 'success'
-                  : 'error'
-                : null
-            }
-            hasFeedback={baseMintInfo && quoteMintInfo}
-          >
-            <Input
-              value={tickSize}
-              onChange={(e) => setTickSize(e.target.value.trim())}
-              type="number"
-              min="0"
-              step="any"
-            />
-          </Form.Item>
-          <Form.Item label=" " colon={false}>
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={!canSubmit}
-              loading={submitting}
+            {baseMintInput}
+            {quoteMintInput}
+            <Form.Item
+              label={
+                <Tooltip title="Smallest allowed order size. For a BTC/USDT market, this would be in units of BTC.">
+                  Minimum Order Size{' '}
+                  <Text type="secondary">(Lot size in e.g. BTC)</Text>
+                </Tooltip>
+              }
+              name="lotSize"
+              initialValue="1"
+              validateStatus={
+                baseMintInfo && quoteMintInfo
+                  ? baseLotSize
+                    ? 'success'
+                    : 'error'
+                  : null
+              }
+              hasFeedback={baseMintInfo && quoteMintInfo}
             >
-              {connected ? 'Submit' : 'Not connected to wallet'}
-            </Button>
-          </Form.Item>
-        </Form>
-      </FloatingElement>
-      {listedMarket ? (
-        <FloatingElement>
-          <Text>New market address: {listedMarket.toBase58()}</Text>
+              <Input
+                value={lotSize}
+                onChange={(e) => setLotSize(e.target.value.trim())}
+                type="number"
+                min="0"
+                step="any"
+              />
+            </Form.Item>
+            <Form.Item
+              label={
+                <Tooltip title="Smallest amount by which prices can move. For a BTC/USDT market, this would be in units of USDT.">
+                  Tick Size{' '}
+                  <Text type="secondary">(Price increment in e.g. USDT)</Text>
+                </Tooltip>
+              }
+              name="tickSize"
+              initialValue="0.01"
+              validateStatus={
+                baseMintInfo && quoteMintInfo
+                  ? quoteLotSize
+                    ? 'success'
+                    : 'error'
+                  : null
+              }
+              hasFeedback={baseMintInfo && quoteMintInfo}
+            >
+              <Input
+                value={tickSize}
+                onChange={(e) => setTickSize(e.target.value.trim())}
+                type="number"
+                min="0"
+                step="any"
+              />
+            </Form.Item>
+            <Form.Item label=" " colon={false}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                disabled={!canSubmit}
+                loading={submitting}
+                style={{ width: '100%' }}
+                size="large"
+              >
+                {connected ? 'Submit' : 'Not connected to wallet'}
+              </Button>
+            </Form.Item>
+          </Form>
         </FloatingElement>
-      ) : null}
-    </Wrapper>
+        {listedMarket ? (
+          <FloatingElement>
+            <Text>New market address: {listedMarket.toBase58()}</Text>
+          </FloatingElement>
+        ) : null}
+      </Wrapper>
+    </div>
   );
 }

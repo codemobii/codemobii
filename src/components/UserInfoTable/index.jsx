@@ -12,9 +12,14 @@ const { TabPane } = Tabs;
 
 export default function Index() {
   const { market } = useMarket();
+  const renderTabBar = (props, DefaultTabBar) => (
+    <div style={{ paddingLeft: 10 }}>
+      <DefaultTabBar {...props} className="site-custom-tab-bar" />
+    </div>
+  );
   return (
-    <FloatingElement style={{ flex: 1, paddingTop: 20 }}>
-      <Typography>
+    <FloatingElement style={{ flex: 1 }}>
+      {/* <Typography>
         <Paragraph style={{ color: 'rgba(255,255,255,0.5)' }}>
           Make sure to go to Balances and click Settle to send out your funds.
         </Paragraph>
@@ -23,20 +28,33 @@ export default function Index() {
           You can get SOL from FTX, Binance, BitMax, and others. You can get
           other tokens from FTX.{' '}
         </Paragraph>
-      </Typography>
-      <Tabs defaultActiveKey="orders">
+      </Typography> */}
+      <Tabs
+        defaultActiveKey="orders"
+        style={{ backgroundColor: '#3B3363' }}
+        renderTabBar={renderTabBar}
+      >
         <TabPane tab="Open Orders" key="orders">
-          <OpenOrdersTab />
+          <div style={{ marginTop: -15 }}>
+            <OpenOrdersTab />
+          </div>
         </TabPane>
         <TabPane tab="Recent Trade History" key="fills">
-          <FillsTable />
+          <div style={{ marginTop: -15 }}>
+            <FillsTable />
+          </div>
         </TabPane>
         <TabPane tab="Balances" key="balances">
-          <BalancesTab />
+          <div style={{ marginTop: -15 }}>
+            <BalancesTab />
+          </div>
         </TabPane>
         {market && market.supportsSrmFeeDiscounts ? (
           <TabPane tab="Fee discounts" key="fees">
-            <FeesTable />
+            <div style={{ marginTop: -15 }}>
+              {' '}
+              <FeesTable />
+            </div>
           </TabPane>
         ) : null}
       </Tabs>

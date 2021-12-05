@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.card_b {
+  background-color: #2c254a;
+  padding: 20px;
+}
+
+.page_card {
+  border: 1px solid #473f72;
+}

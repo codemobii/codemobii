@@ -31,7 +31,9 @@ export default function BalancesPage() {
   });
 
   return (
-    <FloatingElement style={{ flex: 1, paddingTop: 10 }}>
+    <FloatingElement
+      style={{ flex: 1, paddingTop: 10, maxWidth: 1024, margin: 'auto' }}
+    >
       <Tabs defaultActiveKey="walletBalances">
         <TabPane tab="Wallet Balances" key="walletBalances">
           <WalletBalancesTable walletBalances={data} />

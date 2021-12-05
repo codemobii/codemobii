@@ -8,9 +8,11 @@ import { BonfidaTrade } from '../utils/types';
 
 const Title = styled.div`
   color: rgba(255, 255, 255, 1);
+  font-size: 13px;
 `;
 const SizeTitle = styled(Row)`
-  padding: 20px 0 14px;
+  padding: 5px 0;
+  font-size: 12px;
   color: #434a59;
 `;
 
@@ -22,15 +24,13 @@ export default function PublicTrades({ smallScreen }) {
     <FloatingElement
       style={
         smallScreen
-          ? { flex: 1 }
+          ? { flex: 1, height: '45vh', padding: '10px' }
           : {
-              marginTop: '10px',
-              minHeight: '270px',
-              maxHeight: 'calc(100vh - 700px)',
+              minHeight: '60vh',
             }
       }
     >
-      <Title>Recent Market trades</Title>
+      <Title>Recent Market Trades</Title>
       <SizeTitle>
         <Col span={8}>Price ({quoteCurrency}) </Col>
         <Col span={8} style={{ textAlign: 'right' }}>
@@ -52,7 +52,7 @@ export default function PublicTrades({ smallScreen }) {
           }}
         >
           {trades.map((trade: BonfidaTrade, i: number) => (
-            <Row key={i} style={{ marginBottom: 4 }}>
+            <Row key={i} style={{ marginBottom: 4, fontSize: 11 }}>
               <Col
                 span={8}
                 style={{

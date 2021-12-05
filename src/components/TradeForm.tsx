@@ -1,5 +1,5 @@
-import {Button, Input, Radio, Slider, Switch} from 'antd';
-import React, {useEffect, useState} from 'react';
+import { Button, Checkbox, Input, Radio, Slider, Switch } from 'antd';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
   useFeeDiscountKeys,
@@ -12,26 +12,32 @@ import {
   useSelectedQuoteCurrencyAccount,
   useSelectedQuoteCurrencyBalances,
 } from '../utils/markets';
-import {useWallet} from '../utils/wallet';
-import {notify} from '../utils/notifications';
-import {floorToDecimal, getDecimalCount, roundToDecimal,} from '../utils/utils';
-import {useSendConnection} from '../utils/connection';
+import { useWallet } from '../utils/wallet';
+import { notify } from '../utils/notifications';
+import {
+  floorToDecimal,
+  getDecimalCount,
+  roundToDecimal,
+} from '../utils/utils';
+import { useSendConnection } from '../utils/connection';
 import FloatingElement from './layout/FloatingElement';
-import {getUnixTs, placeOrder} from '../utils/send';
-import {SwitchChangeEventHandler} from 'antd/es/switch';
-import {refreshCache} from '../utils/fetch-loop';
+import { getUnixTs, placeOrder } from '../utils/send';
+import { SwitchChangeEventHandler } from 'antd/es/switch';
+import { refreshCache } from '../utils/fetch-loop';
 import tuple from 'immutable-tuple';
 
 const SellButton = styled(Button)`
   margin: 20px 0px 0px 0px;
   background: #f23b69;
   border-color: #f23b69;
+  border-radius: 10px;
 `;
 
 const BuyButton = styled(Button)`
   margin: 20px 0px 0px 0px;
   background: #02bf76;
   border-color: #02bf76;
+  border-radius: 10px;
 `;
 
 const sliderMarks = {
@@ -41,6 +47,8 @@ const sliderMarks = {
   75: '75%',
   100: '100%',
 };
+
+const sliderMark = [25, 50, 75, 100];
 
 export default function TradeForm({
   style,
@@ -209,13 +217,13 @@ export default function TradeForm({
     onSetBaseSize(formatted);
   };
 
-  const postOnChange: SwitchChangeEventHandler = (checked) => {
+  const postOnChange = (checked) => {
     if (checked) {
       setIoc(false);
     }
     setPostOnly(checked);
   };
-  const iocOnChange: SwitchChangeEventHandler = (checked) => {
+  const iocOnChange = (checked) => {
     if (checked) {
       setPostOnly(false);
     }
@@ -272,18 +280,37 @@ export default function TradeForm({
     }
   }
 
+  const [dimensions, setDimensions] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const width = dimensions?.width;
+
   return (
-    <FloatingElement
-      style={{ display: 'flex', flexDirection: 'column', ...style }}
-    >
+    <>
       <div style={{ flex: 1 }}>
         <Radio.Group
           onChange={(e) => setSide(e.target.value)}
           value={side}
           buttonStyle="solid"
           style={{
-            marginBottom: 8,
+            marginBottom: 15,
             width: '100%',
+            borderRadius: 10,
+            overflow: 'hidden',
           }}
         >
           <Radio.Button
@@ -293,6 +320,8 @@ export default function TradeForm({
               textAlign: 'center',
               background: side === 'buy' ? '#02bf76' : '',
               borderColor: side === 'buy' ? '#02bf76' : '',
+              borderTopLeftRadius: 'inherit',
+              borderBottomLeftRadius: 'inherit',
             }}
           >
             BUY
@@ -304,6 +333,8 @@ export default function TradeForm({
               textAlign: 'center',
               background: side === 'sell' ? '#F23B69' : '',
               borderColor: side === 'sell' ? '#F23B69' : '',
+              borderTopRightRadius: 'inherit',
+              borderBottomRightRadius: 'inherit',
             }}
           >
             SELL
@@ -322,7 +353,12 @@ export default function TradeForm({
         />
         <Input.Group compact style={{ paddingBottom: 8 }}>
           <Input
-            style={{ width: 'calc(50% + 30px)', textAlign: 'right' }}
+            style={{
+              width: 'calc(50% + 30px)',
+              textAlign: 'right',
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0,
+            }}
             addonBefore={<div style={{ width: '30px' }}>Size</div>}
             suffix={
               <span style={{ fontSize: 10, opacity: 0.5 }}>{baseCurrency}</span>
@@ -345,21 +381,63 @@ export default function TradeForm({
             onChange={(e) => onSetQuoteSize(parseFloat(e.target.value))}
           />
         </Input.Group>
-        <Slider
-          value={sizeFraction}
-          tipFormatter={(value) => `${value}%`}
-          marks={sliderMarks}
-          onChange={onSliderChange}
-        />
+
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginTop: 20,
+          }}
+        >
+          {width > 1000 && (
+            <div
+              style={{
+                width: '18%',
+              }}
+            >
+              <Button
+                block
+                type={0 === sizeFraction ? 'primary' : 'default'}
+                size="small"
+                style={{
+                  borderRadius: 7,
+                }}
+                onClick={() => onSliderChange(0)}
+              >
+                0%
+              </Button>
+            </div>
+          )}
+          {sliderMark.map((e, i) => (
+            <div
+              style={{
+                width: width < 1000 ? '23%' : '18%',
+              }}
+            >
+              <Button
+                key={i}
+                block
+                type={e === sizeFraction ? 'primary' : 'default'}
+                size="small"
+                style={{
+                  borderRadius: 7,
+                }}
+                onClick={() => onSliderChange(e)}
+              >
+                {e}%
+              </Button>
+            </div>
+          ))}
+        </div>
         <div style={{ paddingTop: 18 }}>
-          {'POST '}
-          <Switch
-            checked={postOnly}
-            onChange={postOnChange}
-            style={{ marginRight: 40 }}
-          />
-          {'IOC '}
-          <Switch checked={ioc} onChange={iocOnChange} />
+          <Checkbox checked={postOnly} onChange={postOnChange}>
+            post
+          </Checkbox>
+          <Checkbox checked={ioc} onChange={iocOnChange}>
+            ioc
+          </Checkbox>
         </div>
       </div>
       {side === 'buy' ? (
@@ -385,6 +463,6 @@ export default function TradeForm({
           Sell {baseCurrency}
         </SellButton>
       )}
-    </FloatingElement>
+    </>
   );
 }

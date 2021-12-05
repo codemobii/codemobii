@@ -35,9 +35,10 @@ const Tip = styled.p`
 `;
 
 const ActionButton = styled(Button)`
-  color: #2abdd2;
-  background-color: #212734;
+  color: #fff;
+  background-color: #5b5288;
   border-width: 0px;
+  border-radius: 0px;
 `;
 
 export default function StandaloneBalancesDisplay() {
@@ -185,7 +186,7 @@ export default function StandaloneBalancesDisplay() {
   ];
 
   return (
-    <FloatingElement style={{ flex: 1, paddingTop: 10 }}>
+    <>
       {formattedBalances.map(
         ([currency, balances, baseOrQuote, mint], index) => (
           <React.Fragment key={index}>
@@ -198,7 +199,7 @@ export default function StandaloneBalancesDisplay() {
                   title="Token mint"
                   trigger="hover"
                 >
-                  <InfoCircleOutlined style={{ color: '#2abdd2' }} />
+                  <InfoCircleOutlined style={{ color: '#53e1e1' }} />
                 </Popover>
               )}
             </Divider>
@@ -219,7 +220,7 @@ export default function StandaloneBalancesDisplay() {
               style={{ paddingBottom: 12 }}
             >
               <Col>Wallet balance:</Col>
-              <Col>{balances && balances.wallet}</Col>
+              <Col>{balances ? balances.wallet : 0}</Col>
             </RowBox>
             <RowBox
               align="middle"
@@ -227,10 +228,18 @@ export default function StandaloneBalancesDisplay() {
               style={{ paddingBottom: 12 }}
             >
               <Col>Unsettled balance:</Col>
-              <Col>{balances && balances.unsettled}</Col>
+              <Col>{balances ? balances.unsettled : 0}</Col>
             </RowBox>
-            <RowBox align="middle" justify="space-around">
-              <Col style={{ width: 150 }}>
+            <Row
+              style={{
+                marginBottom: 20,
+                borderRadius: 10,
+                overflow: 'hidden',
+              }}
+              align="middle"
+              justify="space-around"
+            >
+              <Col style={{ width: '50%' }}>
                 <ActionButton
                   block
                   size="large"
@@ -239,12 +248,12 @@ export default function StandaloneBalancesDisplay() {
                   Deposit
                 </ActionButton>
               </Col>
-              <Col style={{ width: 150 }}>
+              <Col style={{ width: '50%', borderLeft: '2px solid #2C254A' }}>
                 <ActionButton block size="large" onClick={onSettleFunds}>
                   Settle
                 </ActionButton>
               </Col>
-            </RowBox>
+            </Row>
             <Tip>
               All deposits go to your{' '}
               <Link external to={providerUrl}>
@@ -259,6 +268,6 @@ export default function StandaloneBalancesDisplay() {
         baseOrQuote={baseOrQuote}
         onClose={() => setBaseOrQuote('')}
       />
-    </FloatingElement>
+    </>
   );
 }

@@ -32,28 +32,43 @@ import { TVChartContainer } from '../components/TradingView';
 //   return <></>
 // }
 
+const Title = styled.div`
+  color: rgba(255, 255, 255, 1);
+  padding: 10px;
+`;
+
 const { Option, OptGroup } = Select;
 
 const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 16px 16px;
   .borderNone .ant-select-selector {
     border: none !important;
   }
 `;
 
 export default function TradePage() {
-  const { marketAddress } = useParams();
+  // const { marketAddress } = useParams();
+  const addy =
+    localStorage.getItem('marketAddress') ||
+    JSON.stringify('4xTNh56m9JMgGheU9SbDVN99E39zzUK9Fyhk8JWRbDgM');
+
+  const [marketAddress, setMarketAddresss] = useState(JSON.parse(addy));
+
   useEffect(() => {
-    if (marketAddress) {
-      localStorage.setItem('marketAddress', JSON.stringify(marketAddress));
-    }
+    const letMarketAddress = async () => {
+      if (marketAddress) {
+        localStorage.setItem('marketAddress', JSON.stringify(marketAddress));
+      }
+    };
+    letMarketAddress();
   }, [marketAddress]);
   const history = useHistory();
   function setMarketAddress(address) {
-    history.push(getTradePageUrl(address));
+    let add = getTradePageUrl(address);
+    setMarketAddresss(add);
+    localStorage.setItem('marketAddress', JSON.stringify(add));
   }
 
   return (
@@ -125,7 +140,7 @@ function TradePageInner() {
     } else if (width < 1000) {
       return <RenderSmaller {...componentProps} />;
     } else if (width < 1450) {
-      return <RenderSmall {...componentProps} />;
+      return <RenderNormal {...componentProps} />;
     } else {
       return <RenderNormal {...componentProps} />;
     }
@@ -162,7 +177,12 @@ function TradePageInner() {
       <Wrapper>
         <Row
           align="middle"
-          style={{ paddingLeft: 5, paddingRight: 5 }}
+          style={{
+            padding: 10,
+            backgroundColor: '#3B3363',
+            borderBottom: '1px solid #473F72',
+            borderTop: '1px solid #473F72',
+          }}
           gutter={16}
         >
           <Col>
@@ -182,13 +202,13 @@ function TradePageInner() {
                 title="Market address"
                 trigger="click"
               >
-                <InfoCircleOutlined style={{ color: '#2abdd2' }} />
+                <InfoCircleOutlined style={{ color: '#53e1e1' }} />
               </Popover>
             </Col>
           ) : null}
           <Col>
             <PlusCircleOutlined
-              style={{ color: '#2abdd2' }}
+              style={{ color: '#53e1e1' }}
               onClick={() => setAddMarketVisible(true)}
             />
           </Col>
@@ -335,32 +355,66 @@ const DeprecatedMarketsPage = ({ switchToLiveMarkets }) => {
 
 const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
-    <Row
+    <div
       style={{
-        minHeight: '900px',
-        flexWrap: 'nowrap',
+        position: 'relative',
+        height: 'auto',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
       }}
     >
-      <Col flex="auto" style={{ height: '50vh' }}>
-        <Row style={{ height: '100%' }}>
-          <TVChartContainer />
-        </Row>
-        <Row style={{ height: '70%' }}>
+      <div style={{ width: '80%', height: 'auto', position: 'relative' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ width: '50%', height: '45vh' }}>
+            {/* <Title>Chart</Title> */}
+            <TVChartContainer />
+          </div>
+
+          <div
+            style={{
+              width: '25%',
+              position: 'relative',
+              borderLeft: '1px solid #473F72',
+            }}
+          >
+            <TradesTable smallScreen={true} />
+          </div>
+          <div
+            style={{
+              width: '25%',
+              position: 'relative',
+              borderLeft: '1px solid #473F72',
+            }}
+          >
+            <Orderbook smallScreen={true} onPrice={onPrice} onSize={onSize} />
+          </div>
+        </div>
+
+        <div
+          style={{
+            width: '100%',
+            borderTop: '1px solid #473F72',
+            height: '55vh',
+            flex: 1,
+            backgroundColor: '#2C254A',
+          }}
+        >
           <UserInfoTable />
-        </Row>
-      </Col>
-      <Col flex={'360px'} style={{ height: '100%' }}>
-        <Orderbook smallScreen={false} onPrice={onPrice} onSize={onSize} />
-        <TradesTable smallScreen={false} />
-      </Col>
-      <Col
-        flex="400px"
-        style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+        </div>
+      </div>
+      <div
+        style={{
+          borderLeft: '1px solid #473F72',
+          width: '20%',
+          backgroundColor: '#2C254A',
+          padding: 20,
+        }}
       >
         <TradeForm setChangeOrderRef={onChangeOrderRef} />
         <StandaloneBalancesDisplay />
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 };
 
@@ -405,35 +459,38 @@ const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
 
 const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
-    <>
-      <Row style={{ height: '50vh' }}>
-        <TVChartContainer />
-      </Row>
-      <Row>
-        <Col xs={24} sm={12} style={{ height: '100%', display: 'flex' }}>
-          <TradeForm style={{ flex: 1 }} setChangeOrderRef={onChangeOrderRef} />
-        </Col>
-        <Col xs={24} sm={12}>
-          <StandaloneBalancesDisplay />
-        </Col>
-      </Row>
-      <Row
+    <div style={{ position: 'relative', width: '100%', height: 'auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div
+          style={{
+            width: '50%',
+            position: 'relative',
+          }}
+        >
+          <Orderbook smallScreen={true} onPrice={onPrice} onSize={onSize} />
+        </div>
+        <div
+          style={{
+            width: '50%',
+            position: 'relative',
+            borderLeft: '1px solid #473F72',
+            padding: 10,
+          }}
+        >
+          <TradeForm setChangeOrderRef={onChangeOrderRef} />
+        </div>
+      </div>
+      <div
         style={{
-          height: '500px',
+          width: '100%',
+          borderTop: '1px solid #473F72',
+          height: '55vh',
+          flex: 1,
+          backgroundColor: '#2C254A',
         }}
       >
-        <Col xs={24} sm={12} style={{ height: '100%', display: 'flex' }}>
-          <Orderbook smallScreen={true} onPrice={onPrice} onSize={onSize} />
-        </Col>
-        <Col xs={24} sm={12} style={{ height: '100%', display: 'flex' }}>
-          <TradesTable smallScreen={true} />
-        </Col>
-      </Row>
-      <Row>
-        <Col flex="auto">
-          <UserInfoTable />
-        </Col>
-      </Row>
-    </>
+        <UserInfoTable />
+      </div>
+    </div>
   );
 };

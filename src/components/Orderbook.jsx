@@ -10,22 +10,26 @@ import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
 const Title = styled.div`
   color: rgba(255, 255, 255, 1);
+  font-size: 13px;
 `;
 
 const SizeTitle = styled(Row)`
-  padding: 20px 0 14px;
+  padding: 5px 0;
+  font-size: 12px;
   color: #434a59;
 `;
 
 const MarkPriceTitle = styled(Row)`
-  padding: 20px 0 14px;
+  padding: 5px;
   font-weight: 700;
+  background-color: #2c254a;
 `;
 
 const Line = styled.div`
   text-align: right;
   float: right;
   height: 100%;
+  border-radius: 6px;
   ${(props) =>
     props['data-width'] &&
     css`
@@ -41,6 +45,7 @@ const Line = styled.div`
 const Price = styled.div`
   position: absolute;
   right: 5px;
+  font-size: 11px;
   color: white;
 `;
 
@@ -108,7 +113,9 @@ export default function Orderbook({ smallScreen, depth = 7, onPrice, onSize }) {
   return (
     <FloatingElement
       style={
-        smallScreen ? { flex: 1 } : { height: '500px', overflow: 'hidden' }
+        smallScreen
+          ? { flex: 1, height: '45vh', padding: '10px' }
+          : { height: '50vh', overflow: 'hidden' }
       }
     >
       <Title>Orderbook</Title>
@@ -177,8 +184,8 @@ const OrderbookRow = React.memo(
         : price;
 
     return (
-      <Row ref={element} style={{ marginBottom: 1 }} onClick={onSizeClick}>
-        <Col span={12} style={{ textAlign: 'left' }}>
+      <Row ref={element} style={{}} onClick={onSizeClick}>
+        <Col span={12} style={{ textAlign: 'left', fontSize: 11 }}>
           {formattedSize}
         </Col>
         <Col span={12} style={{ textAlign: 'right' }}>
