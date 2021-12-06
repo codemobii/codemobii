@@ -165,7 +165,7 @@ export default function TopBar() {
         onClose={() => setAddEndpointVisible(false)}
       />
       <Wrapper>
-        <LogoWrapper onClick={() => history.push('/cuckoo')}>
+        <LogoWrapper onClick={() => history.push('/')}>
           <img
             src={'https://cuckoodex.com/static/media/logo.fdfe2730.png'}
             alt=""
@@ -186,7 +186,7 @@ export default function TopBar() {
         >
           {width > 1000 && (
             <>
-              <Menu.Item key={'/cuckoo'} style={{ margin: '0 10px 0 20px' }}>
+              <Menu.Item key={'/'} style={{ margin: '0 10px 0 20px' }}>
                 Trade
               </Menu.Item>
               {!searchFocussed && (
@@ -321,7 +321,7 @@ export default function TopBar() {
           }}
         >
           <Link
-            to={'/cuckoo'}
+            to={'/'}
             style={{
               width: '18%',
               display: 'block',

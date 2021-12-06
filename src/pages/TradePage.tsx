@@ -99,7 +99,7 @@ function TradePageInner() {
   });
 
   useEffect(() => {
-    document.title = marketName ? `${marketName} — Serum` : 'Serum';
+    document.title = marketName ? `${marketName} — Cuckoo` : 'Cuckoo';
   }, [marketName]);
 
   const changeOrderRef = useRef<

@@ -22,9 +22,6 @@ export function Routes() {
         <BasicLayout>
           <Switch>
             <Route exact path="/">
-              <Redirect to={'/cuckoo'} />
-            </Route>
-            <Route exact path="/cuckoo">
               <TradePage />
             </Route>
             <Route exact path="/orders" component={OpenOrdersPage} />
