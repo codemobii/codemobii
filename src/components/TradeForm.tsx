@@ -351,36 +351,70 @@ export default function TradeForm({
           step={market?.tickSize || 1}
           onChange={(e) => setPrice(parseFloat(e.target.value))}
         />
-        <Input.Group compact style={{ paddingBottom: 8 }}>
-          <Input
-            style={{
-              width: 'calc(50% + 30px)',
-              textAlign: 'right',
-              borderTopRightRadius: 0,
-              borderBottomRightRadius: 0,
-            }}
-            addonBefore={<div style={{ width: '30px' }}>Size</div>}
-            suffix={
-              <span style={{ fontSize: 10, opacity: 0.5 }}>{baseCurrency}</span>
-            }
-            value={baseSize}
-            type="number"
-            step={market?.minOrderSize || 1}
-            onChange={(e) => onSetBaseSize(parseFloat(e.target.value))}
-          />
-          <Input
-            style={{ width: 'calc(50% - 30px)', textAlign: 'right' }}
-            suffix={
-              <span style={{ fontSize: 10, opacity: 0.5 }}>
-                {quoteCurrency}
-              </span>
-            }
-            value={quoteSize}
-            type="number"
-            step={market?.minOrderSize || 1}
-            onChange={(e) => onSetQuoteSize(parseFloat(e.target.value))}
-          />
-        </Input.Group>
+        {width < 1000 && (
+          <>
+            <Input
+              style={{ textAlign: 'right', paddingBottom: 8 }}
+              addonBefore={<div style={{ width: '30px' }}>Size</div>}
+              suffix={
+                <span style={{ fontSize: 10, opacity: 0.5 }}>
+                  {baseCurrency}
+                </span>
+              }
+              value={baseSize}
+              type="number"
+              step={market?.minOrderSize || 1}
+              onChange={(e) => onSetBaseSize(parseFloat(e.target.value))}
+            />
+
+            <Input
+              style={{ textAlign: 'right', paddingBottom: 8 }}
+              suffix={
+                <span style={{ fontSize: 10, opacity: 0.5 }}>
+                  {quoteCurrency}
+                </span>
+              }
+              value={quoteSize}
+              type="number"
+              step={market?.minOrderSize || 1}
+              onChange={(e) => onSetQuoteSize(parseFloat(e.target.value))}
+            />
+          </>
+        )}
+        {width > 1000 && (
+          <Input.Group compact style={{ paddingBottom: 8 }}>
+            <Input
+              style={{
+                width: 'calc(50% + 30px)',
+                textAlign: 'right',
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+              }}
+              addonBefore={<div style={{ width: '30px' }}>Size</div>}
+              suffix={
+                <span style={{ fontSize: 10, opacity: 0.5 }}>
+                  {baseCurrency}
+                </span>
+              }
+              value={baseSize}
+              type="number"
+              step={market?.minOrderSize || 1}
+              onChange={(e) => onSetBaseSize(parseFloat(e.target.value))}
+            />
+            <Input
+              style={{ width: 'calc(50% - 30px)', textAlign: 'right' }}
+              suffix={
+                <span style={{ fontSize: 10, opacity: 0.5 }}>
+                  {quoteCurrency}
+                </span>
+              }
+              value={quoteSize}
+              type="number"
+              step={market?.minOrderSize || 1}
+              onChange={(e) => onSetQuoteSize(parseFloat(e.target.value))}
+            />
+          </Input.Group>
+        )}
 
         <div
           style={{
@@ -423,6 +457,7 @@ export default function TradeForm({
                 size="small"
                 style={{
                   borderRadius: 7,
+                  fontSize: width < 1000 ? '10px' : '',
                 }}
                 onClick={() => onSliderChange(e)}
               >
