@@ -187,7 +187,7 @@ export default function TopBar() {
           {width > 1000 && (
             <>
               <Menu.Item key={'/cuckoo'} style={{ margin: '0 10px 0 20px' }}>
-                TRADE
+                Trade
               </Menu.Item>
               {!searchFocussed && (
                 <Menu.Item key="/swap" style={{ margin: '0 10px' }}>
@@ -196,32 +196,32 @@ export default function TopBar() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    SWAP
+                    Swap
                   </a>
                 </Menu.Item>
               )}
               {connected &&
                 (!searchFocussed || location.pathname === '/balances') && (
                   <Menu.Item key="/balances" style={{ margin: '0 10px' }}>
-                    BALANCES
+                    Balances
                   </Menu.Item>
                 )}
               {connected &&
                 (!searchFocussed || location.pathname === '/orders') && (
                   <Menu.Item key="/orders" style={{ margin: '0 10px' }}>
-                    ORDERS
+                    Order
                   </Menu.Item>
                 )}
               {connected &&
                 (!searchFocussed || location.pathname === '/convert') && (
                   <Menu.Item key="/convert" style={{ margin: '0 10px' }}>
-                    CONVERT
+                    Convert
                   </Menu.Item>
                 )}
               {(!searchFocussed ||
                 location.pathname === '/list-new-market') && (
                 <Menu.Item key="/list-new-market" style={{ margin: '0 10px' }}>
-                  ADD MARKET
+                  Add market
                 </Menu.Item>
               )}
             </>

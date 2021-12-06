@@ -206,12 +206,12 @@ function TradePageInner() {
               </Popover>
             </Col>
           ) : null}
-          <Col>
+          {/* <Col>
             <PlusCircleOutlined
               style={{ color: '#53e1e1' }}
               onClick={() => setAddMarketVisible(true)}
             />
-          </Col>
+          </Col> */}
           {deprecatedMarkets && deprecatedMarkets.length > 0 && (
             <React.Fragment>
               <Col>
@@ -398,6 +398,7 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
             height: '55vh',
             flex: 1,
             backgroundColor: '#2C254A',
+            overflowX: 'auto',
           }}
         >
           <UserInfoTable />
