@@ -312,7 +312,7 @@ export function getTradePageUrl(marketAddress?: string) {
     }
     marketAddress = marketAddress || DEFAULT_MARKET?.address.toBase58() || '';
   }
-  return marketAddress;
+  return `/market/${marketAddress}`;
 }
 
 export function useSelectedTokenAccounts(): [

@@ -25,7 +25,7 @@ import AppSearch from './AppSearch';
 import { getTradePageUrl } from '../utils/markets';
 
 const Wrapper = styled.div`
-  background-color: #3b3363;
+  background-color: rgb(59, 51, 99, 0.6);
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -165,7 +165,7 @@ export default function TopBar() {
         onClose={() => setAddEndpointVisible(false)}
       />
       <Wrapper>
-        <LogoWrapper onClick={() => history.push('/')}>
+        <LogoWrapper onClick={() => history.push(tradePageUrl)}>
           <img
             src={'https://cuckoodex.com/static/media/logo.fdfe2730.png'}
             alt=""
@@ -186,7 +186,7 @@ export default function TopBar() {
         >
           {width > 1000 && (
             <>
-              <Menu.Item key={'/'} style={{ margin: '0 10px 0 20px' }}>
+              <Menu.Item key={tradePageUrl} style={{ margin: '0 10px 0 20px' }}>
                 Trade
               </Menu.Item>
               {!searchFocussed && (
@@ -321,7 +321,7 @@ export default function TopBar() {
           }}
         >
           <Link
-            to={'/'}
+            to={tradePageUrl}
             style={{
               width: '18%',
               display: 'block',

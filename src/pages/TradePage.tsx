@@ -49,26 +49,16 @@ const Wrapper = styled.div`
 `;
 
 export default function TradePage() {
-  // const { marketAddress } = useParams();
-  const addy =
-    localStorage.getItem('marketAddress') ||
-    JSON.stringify('4xTNh56m9JMgGheU9SbDVN99E39zzUK9Fyhk8JWRbDgM');
-
-  const [marketAddress, setMarketAddresss] = useState(JSON.parse(addy));
+  const { marketAddress } = useParams();
 
   useEffect(() => {
-    const letMarketAddress = async () => {
-      if (marketAddress) {
-        localStorage.setItem('marketAddress', JSON.stringify(marketAddress));
-      }
-    };
-    letMarketAddress();
+    if (marketAddress) {
+      localStorage.setItem('marketAddress', JSON.stringify(marketAddress));
+    }
   }, [marketAddress]);
   const history = useHistory();
   function setMarketAddress(address) {
-    let add = getTradePageUrl(address);
-    setMarketAddresss(add);
-    localStorage.setItem('marketAddress', JSON.stringify(add));
+    history.push(getTradePageUrl(address));
   }
 
   return (
@@ -179,7 +169,7 @@ function TradePageInner() {
           align="middle"
           style={{
             padding: 10,
-            backgroundColor: '#3B3363',
+            backgroundColor: 'rgb(59, 51, 99, 0.6)',
             borderBottom: '1px solid #473F72',
             borderTop: '1px solid #473F72',
           }}
@@ -397,7 +387,7 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
             borderTop: '1px solid #473F72',
             height: '55vh',
             flex: 1,
-            backgroundColor: '#2C254A',
+            backgroundColor: 'rgb(44, 37, 74, 0.6)',
             overflowX: 'auto',
           }}
         >
@@ -408,7 +398,7 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
         style={{
           borderLeft: '1px solid #473F72',
           width: '20%',
-          backgroundColor: '#2C254A',
+          backgroundColor: 'rgb(44, 37, 74, 0.6)',
           padding: 20,
         }}
       >
@@ -487,7 +477,7 @@ const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
           borderTop: '1px solid #473F72',
           height: '55vh',
           flex: 1,
-          backgroundColor: '#2C254A',
+          backgroundColor: 'rgb(44, 37, 74, 0.6)',
         }}
       >
         <UserInfoTable />

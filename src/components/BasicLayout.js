@@ -6,6 +6,7 @@ import { useReferrer } from '../utils/referrer';
 import queryString from 'query-string';
 import { useLocation } from 'react-router-dom';
 import { notify } from '../utils/notifications';
+import BlurBg from '../assets/BlurBg.png';
 const { Header, Content } = Layout;
 
 export default function BasicLayout({ children }) {
@@ -28,6 +29,9 @@ export default function BasicLayout({ children }) {
           minHeight: '100vh',
           flexDirection: 'column',
           overflowX: 'hidden',
+          backgroundImage: `url(${BlurBg})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'repeat',
         }}
       >
         <Header style={{ padding: 0, minHeight: 64, height: 'unset' }}>

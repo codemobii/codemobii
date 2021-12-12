@@ -1,7 +1,16 @@
 import React from 'react';
-import { Dropdown, Menu } from 'antd';
+import styled from 'styled-components';
+import { Dropdown, Button, Menu } from 'antd';
 import { useWallet } from '../utils/wallet';
 import LinkAddress from './LinkAddress';
+
+// #7b29da
+
+const WalletButton = styled(Button)`
+  background: linear-gradient(180deg, #7b29da 0%, #53e1e1 100%);
+  padding-bottom: 5px;
+  border: 0;
+`;
 
 export default function WalletConnect() {
   const { connected, wallet, select, connect, disconnect } = useWallet();
@@ -17,12 +26,13 @@ export default function WalletConnect() {
   );
 
   return (
-    <Dropdown.Button
+    <WalletButton
       type="primary"
+      size="large"
       onClick={connected ? disconnect : connect}
-      overlay={menu}
+      // overlay={menu}
     >
       {connected ? 'Disconnect' : 'Connect'}
-    </Dropdown.Button>
+    </WalletButton>
   );
 }
