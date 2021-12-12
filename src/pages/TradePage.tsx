@@ -27,7 +27,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import { TVChartContainer } from '../components/TradingView';
-// Use following stub for quick setup without the TradingView private dependency
+// Use following stub for quick setup without the TradingView private dependency okay?
 // function TVChartContainer() {
 //   return <></>
 // }
