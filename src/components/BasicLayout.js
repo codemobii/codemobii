@@ -32,6 +32,7 @@ export default function BasicLayout({ children }) {
           backgroundImage: `url(${BlurBg})`,
           backgroundSize: 'contain',
           backgroundRepeat: 'repeat',
+          paddingBottom: '55px'
         }}
       >
         <Header style={{ padding: 0, minHeight: 64, height: 'unset' }}>
