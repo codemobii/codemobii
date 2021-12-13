@@ -83,6 +83,8 @@ export default function BalancesTable({
     },
     {
       key: 'action',
+      fixed: 'right',
+      width: 100,
       render: ({ market, openOrders, marketName }) => (
         <div style={{ textAlign: 'right' }}>
           <Button
@@ -102,6 +104,7 @@ export default function BalancesTable({
       dataSource={balances}
       columns={columns}
       pagination={false}
+      isFixed
     />
   );
 }

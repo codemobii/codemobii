@@ -8,6 +8,7 @@ export default function DataTable({
   pagination = false,
   loading = false,
   pageSize = 10,
+  isFixed = false,
 }) {
   const customizeRenderEmpty = () => (
     <div
@@ -29,6 +30,7 @@ export default function DataTable({
         columns={columns}
         pagination={pagination ? { pagination: true, pageSize } : false}
         loading={loading}
+        scroll={{ x: 550 }}
       />
     </ConfigProvider>
   );
