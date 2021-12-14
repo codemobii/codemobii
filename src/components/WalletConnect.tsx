@@ -7,8 +7,8 @@ import LinkAddress from './LinkAddress';
 // #7b29da
 
 const WalletButton = styled(Button)`
-  background: linear-gradient(180deg, #7b29da 0%, #53e1e1 100%);
-  padding-bottom: 5px;
+  background: #000;
+  padding-bottom: 7px;
   border: 0;
 `;
 

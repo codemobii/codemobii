@@ -28,14 +28,14 @@ import tuple from 'immutable-tuple';
 
 const SellButton = styled(Button)`
   margin: 20px 0px 0px 0px;
-  background: #f23b69;
+  background: #7b29da;
   border-color: #f23b69;
   border-radius: 10px;
 `;
 
 const BuyButton = styled(Button)`
   margin: 20px 0px 0px 0px;
-  background: #02bf76;
+  background: #7b29da;
   border-color: #02bf76;
   border-radius: 10px;
 `;
@@ -305,12 +305,12 @@ export default function TradeForm({
         <Radio.Group
           onChange={(e) => setSide(e.target.value)}
           value={side}
-          buttonStyle="solid"
           style={{
             marginBottom: 15,
             width: '100%',
             borderRadius: 10,
             overflow: 'hidden',
+            border: 'none',
           }}
         >
           <Radio.Button
@@ -318,8 +318,9 @@ export default function TradeForm({
             style={{
               width: '50%',
               textAlign: 'center',
-              background: side === 'buy' ? '#02bf76' : '',
-              borderColor: side === 'buy' ? '#02bf76' : '',
+              borderRadius: side === 'buy' ? 'inherit' : 0,
+              background: side === 'buy' ? '#000' : '',
+              borderColor: side === 'buy' ? 'transparent' : '',
               borderTopLeftRadius: 'inherit',
               borderBottomLeftRadius: 'inherit',
             }}
@@ -331,8 +332,9 @@ export default function TradeForm({
             style={{
               width: '50%',
               textAlign: 'center',
-              background: side === 'sell' ? '#F23B69' : '',
-              borderColor: side === 'sell' ? '#F23B69' : '',
+              background: side === 'sell' ? '#000' : '',
+              borderColor: side === 'sell' ? 'transparent' : '',
+              borderRadius: side === 'sell' ? 'inherit' : 0,
               borderTopRightRadius: 'inherit',
               borderBottomRightRadius: 'inherit',
             }}

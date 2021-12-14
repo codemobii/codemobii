@@ -35,7 +35,7 @@ const Tip = styled.p`
 `;
 
 const ActionButton = styled(Button)`
-  background: linear-gradient(180deg, #7b29da 0%, #53e1e1 100%);
+  background: #7b29da;
   border-width: 0px;
   border-radius: 0px;
 `;
