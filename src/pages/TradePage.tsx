@@ -192,13 +192,13 @@ function TradePageInner() {
                 title="Market address"
                 trigger="click"
               >
-                <InfoCircleOutlined style={{ color: '#53e1e1' }} />
+                <InfoCircleOutlined style={{ color: '#FF5677' }} />
               </Popover>
             </Col>
           ) : null}
           {/* <Col>
             <PlusCircleOutlined
-              style={{ color: '#53e1e1' }}
+              style={{ color: '#FF5677' }}
               onClick={() => setAddMarketVisible(true)}
             />
           </Col> */}

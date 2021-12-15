@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  background-color: #2c254a;
+  background-color: linear-gradient(180deg, #ff5677 0%, #b958a5 100%);
   border-radius: 10px;
   overflow: hidden;
 `;

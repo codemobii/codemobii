@@ -28,14 +28,14 @@ import tuple from 'immutable-tuple';
 
 const SellButton = styled(Button)`
   margin: 20px 0px 0px 0px;
-  background: #7b29da;
+  background: linear-gradient(180deg, #ff5677 0%, #b958a5 100%);
   border-color: #f23b69;
   border-radius: 10px;
 `;
 
 const BuyButton = styled(Button)`
   margin: 20px 0px 0px 0px;
-  background: #7b29da;
+  background: linear-gradient(180deg, #ff5677 0%, #b958a5 100%);
   border-color: #02bf76;
   border-radius: 10px;
 `;
@@ -318,8 +318,8 @@ export default function TradeForm({
             style={{
               width: '50%',
               textAlign: 'center',
-              borderRadius: side === 'buy' ? 'inherit' : 0,
-              background: side === 'buy' ? '#000' : '',
+              // borderRadius: side === 'buy' ? 'inherit' : 0,
+              background: side === 'buy' ? '#b958a5' : '',
               borderColor: side === 'buy' ? 'transparent' : '',
               borderTopLeftRadius: 'inherit',
               borderBottomLeftRadius: 'inherit',
@@ -332,9 +332,9 @@ export default function TradeForm({
             style={{
               width: '50%',
               textAlign: 'center',
-              background: side === 'sell' ? '#000' : '',
+              background: side === 'sell' ? '#b958a5' : '',
               borderColor: side === 'sell' ? 'transparent' : '',
-              borderRadius: side === 'sell' ? 'inherit' : 0,
+              // borderRadius: side === 'sell' ? 'inherit' : 0,
               borderTopRightRadius: 'inherit',
               borderBottomRightRadius: 'inherit',
             }}
