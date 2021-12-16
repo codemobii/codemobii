@@ -319,8 +319,9 @@ export default function TradeForm({
               width: '50%',
               textAlign: 'center',
               // borderRadius: side === 'buy' ? 'inherit' : 0,
-              background: side === 'buy' ? '#b958a5' : '',
-              borderColor: side === 'buy' ? 'transparent' : '',
+              background: side === 'buy' ? '#02bf76' : '',
+              borderColor: side === 'buy' ? '#02bf76' : '',
+              color: '#fff',
               borderTopLeftRadius: 'inherit',
               borderBottomLeftRadius: 'inherit',
             }}
@@ -332,9 +333,9 @@ export default function TradeForm({
             style={{
               width: '50%',
               textAlign: 'center',
-              background: side === 'sell' ? '#b958a5' : '',
-              borderColor: side === 'sell' ? 'transparent' : '',
-              // borderRadius: side === 'sell' ? 'inherit' : 0,
+              background: side === 'sell' ? '#F23B69' : '',
+              borderColor: side === 'sell' ? '#F23B69' : '',
+              color: '#fff',
               borderTopRightRadius: 'inherit',
               borderBottomRightRadius: 'inherit',
             }}
