@@ -4,10 +4,10 @@ import { Dropdown, Button, Menu } from 'antd';
 import { useWallet } from '../utils/wallet';
 import LinkAddress from './LinkAddress';
 
-// #7b29da
+// #53e1e1
 
 const WalletButton = styled(Button)`
-  background: linear-gradient(180deg, #ff5677 0%, #b958a5 100%);
+  background: linear-gradient(180deg, #7b29da 0%, #53e1e1 100%);
   padding-bottom: 7px;
   border: 0;
 `;

@@ -28,14 +28,14 @@ import tuple from 'immutable-tuple';
 
 const SellButton = styled(Button)`
   margin: 20px 0px 0px 0px;
-  background: linear-gradient(180deg, #ff5677 0%, #b958a5 100%);
+  background: linear-gradient(180deg, #7b29da 0%, #53e1e1 100%);
   border-color: #f23b69;
   border-radius: 10px;
 `;
 
 const BuyButton = styled(Button)`
   margin: 20px 0px 0px 0px;
-  background: linear-gradient(180deg, #ff5677 0%, #b958a5 100%);
+  background: linear-gradient(180deg, #7b29da 0%, #53e1e1 100%);
   border-color: #02bf76;
   border-radius: 10px;
 `;

@@ -35,7 +35,7 @@ const Wrapper = styled.div`
 const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
-  color: #ff5677;
+  color: #53e1e1;
   font-weight: bold;
   cursor: pointer;
   img {
@@ -251,7 +251,7 @@ export default function TopBar() {
               >
                 <Col>
                   <PlusCircleOutlined
-                    style={{ color: '#FF5677' }}
+                    style={{ color: '#53e1e1' }}
                     onClick={() => setAddEndpointVisible(true)}
                   />
                 </Col>
@@ -262,7 +262,7 @@ export default function TopBar() {
                     title="URL"
                     trigger="hover"
                   >
-                    <InfoCircleOutlined style={{ color: '#FF5677' }} />
+                    <InfoCircleOutlined style={{ color: '#53e1e1' }} />
                   </Popover>
                 </Col>
                 <Col>

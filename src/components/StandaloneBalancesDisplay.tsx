@@ -35,7 +35,7 @@ const Tip = styled.p`
 `;
 
 const ActionButton = styled(Button)`
-  background: linear-gradient(180deg, #ff5677 0%, #b958a5 100%);
+  background: linear-gradient(180deg, #7b29da 0%, #53e1e1 100%);
   border-width: 0px;
   border-radius: 0px;
 `;
@@ -198,7 +198,7 @@ export default function StandaloneBalancesDisplay() {
                   title="Token mint"
                   trigger="hover"
                 >
-                  <InfoCircleOutlined style={{ color: '#FF5677' }} />
+                  <InfoCircleOutlined style={{ color: '#53e1e1' }} />
                 </Popover>
               )}
             </Divider>
